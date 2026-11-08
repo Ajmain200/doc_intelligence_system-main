@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.pytest_cache/
+
+# Secrets / local config
+.env
+
+# Runtime data
+doc_intelligence.db
+doc_intelligence.db-*
+*.db-wal
+*.db-shm
+uploads/*
+!uploads/.gitkeep
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# OS / editor
+.DS_Store
+Thumbs.db

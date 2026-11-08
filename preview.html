@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Document Intelligence Preview</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    :root {
+      --background: #f8fafc;
+      --card: #ffffff;
+      --foreground: #0f172a;
+      --muted-foreground: #64748b;
+      --border: #e2e8f0;
+      --primary: #4f46e5;
+      --primary-foreground: #ffffff;
+    }
+    .dark {
+      --background: #0b0f19;
+      --card: #131b2e;
+      --foreground: #f1f5f9;
+      --muted-foreground: #94a3b8;
+      --border: #1e293b;
+      --primary: #6366f1;
+      --primary-foreground: #ffffff;
+    }
+  </style>
+</head>
+<body class="bg-[var(--background)] text-[var(--foreground)] antialiased p-4 md:p-6 font-sans">
+  <div class="max-w-6xl mx-auto space-y-5">
+    
+    <!-- Top Header -->
+    <header class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-xl shadow-sm">
+          AI
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base font-bold text-[var(--foreground)] tracking-tight">AI-Powered Document Intelligence System</h1>
+            <span class="px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300">Live Preview</span>
+          </div>
+          <p class="text-xs text-[var(--muted-foreground)]">Enterprise multi-format extraction, financial calculation verification & cross-document reconciliation</p>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Badge Strip -->
+      <div class="flex items-center gap-2.5">
+        <div class="bg-[var(--background)] border border-[var(--border)] px-3 py-1.5 rounded-xl text-center">
+          <span class="block text-[11px] text-[var(--muted-foreground)] uppercase font-semibold">Extraction Acc.</span>
+          <span class="text-sm font-bold text-indigo-600">100.0%</span>
+        </div>
+        <div class="bg-[var(--background)] border border-[var(--border)] px-3 py-1.5 rounded-xl text-center">
+          <span class="block text-[11px] text-[var(--muted-foreground)] uppercase font-semibold">Avg Latency</span>
+          <span class="text-sm font-bold text-emerald-600">1.19 ms</span>
+        </div>
+        <div class="bg-[var(--background)] border border-[var(--border)] px-3 py-1.5 rounded-xl text-center">
+          <span class="block text-[11px] text-[var(--muted-foreground)] uppercase font-semibold">Success Rate</span>
+          <span class="text-sm font-bold text-sky-600">100%</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="flex items-center gap-1.5 bg-[var(--card)] border border-[var(--border)] p-1.5 rounded-xl text-xs font-semibold overflow-x-auto">
+      <button onclick="switchTab('queue')" id="tab-btn-queue" class="px-3.5 py-2 rounded-lg bg-indigo-600 text-white transition-all">
+        1. Document Queue & Ingestion
+      </button>
+      <button onclick="switchTab('inspector')" id="tab-btn-inspector" class="px-3.5 py-2 rounded-lg text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all">
+        2. Extraction Inspector & Edit
+      </button>
+      <button onclick="switchTab('validation')" id="tab-btn-validation" class="px-3.5 py-2 rounded-lg text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all">
+        3. Financial Rules Validation
+      </button>
+      <button onclick="switchTab('cross')" id="tab-btn-cross" class="px-3.5 py-2 rounded-lg text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all">
+        4. Cross-Verification Studio
+      </button>
+      <button onclick="switchTab('search')" id="tab-btn-search" class="px-3.5 py-2 rounded-lg text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all">
+        5. Hybrid Search Explorer
+      </button>
+    </nav>
+
+    <!-- TAB 1: Document Queue & Ingestion -->
+    <div id="tab-queue" class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Ingestion Dropzone -->
+        <div class="bg-[var(--card)] border-2 border-dashed border-indigo-300 rounded-2xl p-6 text-center flex flex-col justify-center items-center">
+          <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+          </div>
+          <h3 class="text-xs font-bold text-[var(--foreground)] mb-1">Batch Document Ingestion</h3>
+          <p class="text-[11px] text-[var(--muted-foreground)] mb-4">PDF (1000 pages), JPG, PNG, TIFF, XLSX, CSV</p>
+          <button onclick="simulateUpload()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs py-2 px-3 rounded-lg transition-colors">
+            + Ingest New Test Document
+          </button>
+        </div>
+
+        <!-- Document List Table -->
+        <div class="md:col-span-2 bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--muted-foreground)]">Processed Documents Queue</h3>
+            <span class="text-xs text-[var(--muted-foreground)]">4 Documents Loaded</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead>
+                <tr class="border-b border-[var(--border)] text-[var(--muted-foreground)]">
+                  <th class="pb-2">Filename</th>
+                  <th class="pb-2">Format</th>
+                  <th class="pb-2">Pages</th>
+                  <th class="pb-2">Status</th>
+                  <th class="pb-2 text-right">Confidence</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[var(--border)]">
+                <tr onclick="loadDoc(0)" class="hover:bg-indigo-50/40 cursor-pointer">
+                  <td class="py-2.5 font-medium text-indigo-600">invoice_cloudscale.pdf</td>
+                  <td class="py-2.5 uppercase text-[var(--muted-foreground)]">PDF</td>
+                  <td class="py-2.5">2</td>
+                  <td class="py-2.5"><span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800">COMPLETED</span></td>
+                  <td class="py-2.5 text-right font-bold text-emerald-600">98%</td>
+                </tr>
+                <tr onclick="loadDoc(1)" class="hover:bg-indigo-50/40 cursor-pointer">
+                  <td class="py-2.5 font-medium text-indigo-600">office_supplies_scan.png</td>
+                  <td class="py-2.5 uppercase text-[var(--muted-foreground)]">PNG (OCR)</td>
+                  <td class="py-2.5">1</td>
+                  <td class="py-2.5"><span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 text-amber-800">NEEDS REVIEW</span></td>
+                  <td class="py-2.5 text-right font-bold text-amber-600">89%</td>
+                </tr>
+                <tr onclick="loadDoc(2)" class="hover:bg-indigo-50/40 cursor-pointer">
+                  <td class="py-2.5 font-medium text-indigo-600">q3_accounting_ledger.xlsx</td>
+                  <td class="py-2.5 uppercase text-[var(--muted-foreground)]">XLSX</td>
+                  <td class="py-2.5">3 Sheets</td>
+                  <td class="py-2.5"><span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800">COMPLETED</span></td>
+                  <td class="py-2.5 text-right font-bold text-emerald-600">100%</td>
+                </tr>
+                <tr onclick="loadDoc(3)" class="hover:bg-indigo-50/40 cursor-pointer">
+                  <td class="py-2.5 font-medium text-indigo-600">purchase_order_po99.pdf</td>
+                  <td class="py-2.5 uppercase text-[var(--muted-foreground)]">PDF</td>
+                  <td class="py-2.5">1</td>
+                  <td class="py-2.5"><span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800">COMPLETED</span></td>
+                  <td class="py-2.5 text-right font-bold text-emerald-600">95%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: Extraction Inspector & Edit -->
+    <div id="tab-inspector" class="space-y-4 hidden">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-[var(--border)]">
+          <div>
+            <h2 class="text-sm font-bold text-[var(--foreground)]" id="insp-title">Invoice Extraction Inspector</h2>
+            <p class="text-xs text-[var(--muted-foreground)]" id="insp-docname">Document: invoice_cloudscale.pdf</p>
+          </div>
+          <button onclick="recalculate()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5">
+            Recalculate & Validate
+          </button>
+        </div>
+
+        <!-- Key Values -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+          <div>
+            <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Invoice Number</label>
+            <input id="f-inv-num" type="text" value="CS-2024-8812" class="w-full p-2 rounded-lg border border-[var(--border)] bg-[var(--background)] outline-none font-semibold">
+          </div>
+          <div>
+            <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Invoice Date</label>
+            <input id="f-inv-date" type="text" value="2024-05-10" class="w-full p-2 rounded-lg border border-[var(--border)] bg-[var(--background)] outline-none">
+          </div>
+          <div>
+            <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Supplier / Vendor</label>
+            <input id="f-supplier" type="text" value="CloudScale Systems Inc." class="w-full p-2 rounded-lg border border-[var(--border)] bg-[var(--background)] outline-none">
+          </div>
+          <div>
+            <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Customer</label>
+            <input id="f-customer" type="text" value="Delta Logistics" class="w-full p-2 rounded-lg border border-[var(--border)] bg-[var(--background)] outline-none">
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Currency</label>
+            <input id="f-currency" type="text" value="USD" class="w-full p-2 rounded-lg border border-[var(--border)] bg-[var(--background)] outline-none">
+          </div>
+          <div>
+            <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Subtotal ($)</label>
+            <input id="f-subtotal" type="number" step="0.01" value="600.00" class="w-full p-2 rounded-lg border border-[var(--border)] bg-[var(--background)] outline-none">
+          </div>
+          <div>
+            <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Tax ($)</label>
+            <input id="f-tax" type="number" step="0.01" value="60.00" class="w-full p-2 rounded-lg border border-[var(--border)] bg-[var(--background)] outline-none">
+          </div>
+          <div>
+            <label class="block text-[11px] font-medium text-indigo-600 font-bold mb-1">Total Amount ($)</label>
+            <input id="f-total" type="number" step="0.01" value="660.00" class="w-full p-2 rounded-lg border border-indigo-400 bg-[var(--background)] outline-none font-bold text-indigo-600">
+          </div>
+        </div>
+
+        <!-- Line Items -->
+        <div class="mt-4">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--muted-foreground)] mb-2">Itemized Billing Breakdown</h3>
+          <div class="border border-[var(--border)] rounded-xl overflow-hidden">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 border-b border-[var(--border)] text-[var(--muted-foreground)]">
+                <tr>
+                  <th class="p-2.5">Description</th>
+                  <th class="p-2.5 w-20">Qty</th>
+                  <th class="p-2.5 w-24">Unit Price</th>
+                  <th class="p-2.5 w-28">Amount</th>
+                </tr>
+              </thead>
+              <tbody id="line-items-body" class="divide-y divide-[var(--border)]">
+                <tr>
+                  <td class="p-2.5">Managed Kubernetes Node</td>
+                  <td class="p-2.5">2</td>
+                  <td class="p-2.5">$250.00</td>
+                  <td class="p-2.5 font-semibold text-slate-800">$500.00</td>
+                </tr>
+                <tr>
+                  <td class="p-2.5">SSL Wildcard Certificate</td>
+                  <td class="p-2.5">1</td>
+                  <td class="p-2.5">$100.00</td>
+                  <td class="p-2.5 font-semibold text-slate-800">$100.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Financial Rules Validation -->
+    <div id="tab-validation" class="space-y-4 hidden">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-[var(--border)]">
+          <div>
+            <h3 class="text-sm font-bold text-[var(--foreground)]">Automated Validation Engine Results</h3>
+            <p class="text-xs text-[var(--muted-foreground)]">Verification of mathematical integrity, mandatory fields & duplicate check</p>
+          </div>
+          <span id="val-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+            ALL CHECKS PASSED
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+          <div class="p-3.5 rounded-xl border border-[var(--border)] bg-slate-50">
+            <span class="block text-[11px] text-[var(--muted-foreground)] mb-1">Check 1: Item Sum == Subtotal</span>
+            <div class="font-bold text-slate-800 text-sm">$500 + $100 = $600.00</div>
+            <span class="text-emerald-600 font-semibold text-[11px]">Match Valid (Diff: $0.00)</span>
+          </div>
+          <div class="p-3.5 rounded-xl border border-[var(--border)] bg-slate-50">
+            <span class="block text-[11px] text-[var(--muted-foreground)] mb-1">Check 2: Subtotal + Tax == Total</span>
+            <div class="font-bold text-slate-800 text-sm">$600 + $60 = $660.00</div>
+            <span class="text-emerald-600 font-semibold text-[11px]">Calculations Match (Diff: $0.00)</span>
+          </div>
+          <div class="p-3.5 rounded-xl border border-[var(--border)] bg-slate-50">
+            <span class="block text-[11px] text-[var(--muted-foreground)] mb-1">Check 3: Duplicate Invoice Check</span>
+            <div class="font-bold text-slate-800 text-sm">Vendor + Invoice #</div>
+            <span class="text-emerald-600 font-semibold text-[11px]">Unique Record In DB</span>
+          </div>
+        </div>
+
+        <div id="val-alert-box" class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2">
+          <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+          <span>All 6 validation rules succeeded. Record ready for ERP synchronization.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: Cross-Verification Studio -->
+    <div id="tab-cross" class="space-y-4 hidden">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm space-y-4">
+        <div>
+          <h3 class="text-sm font-bold text-[var(--foreground)]">Cross-Document Verification Studio</h3>
+          <p class="text-xs text-[var(--muted-foreground)]">Reconciles PDF Invoices against Purchase Orders (PDF vs PDF) or Accounting Ledgers (PDF vs Excel)</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-xl border border-[var(--border)] bg-slate-50 space-y-2 text-xs">
+            <div class="font-bold text-indigo-700 uppercase tracking-wider text-[11px]">Document A (PDF Invoice)</div>
+            <div class="font-semibold text-slate-800">invoice_cloudscale.pdf</div>
+            <div class="text-[var(--muted-foreground)]">Vendor: CloudScale Systems Inc.</div>
+            <div class="text-[var(--muted-foreground)]">Stated Amount: <span class="font-bold text-slate-800">$660.00 USD</span></div>
+          </div>
+
+          <div class="p-4 rounded-xl border border-[var(--border)] bg-slate-50 space-y-2 text-xs">
+            <div class="font-bold text-indigo-700 uppercase tracking-wider text-[11px]">Document B (Excel Ledger)</div>
+            <div class="font-semibold text-slate-800">q3_accounting_ledger.xlsx (Sheet: Payables)</div>
+            <div class="text-[var(--muted-foreground)]">Row Match: CS-2024-8812</div>
+            <div class="text-[var(--muted-foreground)]">Ledger Amount: <span class="font-bold text-slate-800">$660.00 USD</span></div>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <span class="font-bold">Reconciliation Status: EXACT MATCH (100% Confidence)</span>
+          </div>
+          <span class="text-emerald-700 font-medium">Discrepancies: 0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: Hybrid Search Explorer -->
+    <div id="tab-search" class="space-y-4 hidden">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm space-y-4">
+        <div>
+          <h3 class="text-sm font-bold text-[var(--foreground)]">Hybrid Search Engine</h3>
+          <p class="text-xs text-[var(--muted-foreground)]">Query across invoice IDs, vendor names, or semantic concepts (BM25 Keyword + Vector Embeddings)</p>
+        </div>
+
+        <div class="flex gap-2">
+          <input id="search-input" type="text" placeholder="Try: 'Kubernetes cloud server', 'CS-2024', 'office supplies'..." class="flex-1 text-xs p-2.5 rounded-xl border border-[var(--border)] bg-[var(--background)] outline-none">
+          <button onclick="performSearch()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs px-4 py-2.5 rounded-xl transition-colors">
+            Search
+          </button>
+        </div>
+
+        <div id="search-results" class="space-y-2 text-xs">
+          <div class="p-3 rounded-xl border border-[var(--border)] hover:border-indigo-400 bg-slate-50 flex items-center justify-between">
+            <div>
+              <div class="font-bold text-indigo-700">invoice_cloudscale.pdf</div>
+              <div class="text-[var(--muted-foreground)] text-[11px]">Vendor: CloudScale Systems Inc. | Inv #CS-2024-8812 | Total: $660.00</div>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold text-[11px]">Match: 99.4%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const docs = [
+      {
+        name: "invoice_cloudscale.pdf",
+        inv: "CS-2024-8812",
+        date: "2024-05-10",
+        supplier: "CloudScale Systems Inc.",
+        customer: "Delta Logistics",
+        currency: "USD",
+        subtotal: 600.00,
+        tax: 60.00,
+        total: 660.00,
+        lines: [
+          { desc: "Managed Kubernetes Node", qty: 2, price: 250, total: 500 },
+          { desc: "SSL Wildcard Certificate", qty: 1, price: 100, total: 100 }
+        ]
+      },
+      {
+        name: "office_supplies_scan.png",
+        inv: "INV-44110",
+        date: "2024-06-01",
+        supplier: "Modern Office Supplies",
+        customer: "Quantum Innovations",
+        currency: "USD",
+        subtotal: 900.00,
+        tax: 90.00,
+        total: 990.00,
+        lines: [
+          { desc: "Ergonomic Chairs", qty: 5, price: 120, total: 600 },
+          { desc: "Whiteboards", qty: 2, price: 150, total: 300 }
+        ]
+      }
+    ];
+
+    function switchTab(tabId) {
+      ['queue', 'inspector', 'validation', 'cross', 'search'].forEach(t => {
+        document.getElementById('tab-' + t).classList.add('hidden');
+        document.getElementById('tab-btn-' + t).className = "px-3.5 py-2 rounded-lg text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all";
+      });
+      document.getElementById('tab-' + tabId).classList.remove('hidden');
+      document.getElementById('tab-btn-' + tabId).className = "px-3.5 py-2 rounded-lg bg-indigo-600 text-white transition-all";
+    }
+
+    function loadDoc(idx) {
+      const d = docs[idx % docs.length];
+      document.getElementById('insp-docname').innerText = "Document: " + d.name;
+      document.getElementById('f-inv-num').value = d.inv;
+      document.getElementById('f-inv-date').value = d.date;
+      document.getElementById('f-supplier').value = d.supplier;
+      document.getElementById('f-customer').value = d.customer;
+      document.getElementById('f-currency').value = d.currency;
+      document.getElementById('f-subtotal').value = d.subtotal;
+      document.getElementById('f-tax').value = d.tax;
+      document.getElementById('f-total').value = d.total;
+
+      const tbody = document.getElementById('line-items-body');
+      tbody.innerHTML = d.lines.map(l => `
+        <tr>
+          <td class="p-2.5">${l.desc}</td>
+          <td class="p-2.5">${l.qty}</td>
+          <td class="p-2.5">$${l.price.toFixed(2)}</td>
+          <td class="p-2.5 font-semibold text-slate-800">$${l.total.toFixed(2)}</td>
+        </tr>
+      `).join('');
+
+      switchTab('inspector');
+    }
+
+    function recalculate() {
+      const sub = parseFloat(document.getElementById('f-subtotal').value) || 0;
+      const tax = parseFloat(document.getElementById('f-tax').value) || 0;
+      const tot = parseFloat(document.getElementById('f-total').value) || 0;
+
+      const diff = Math.abs((sub + tax) - tot);
+      if (diff > 0.05) {
+        alert("Validation Alert: Subtotal ($" + sub + ") + Tax ($" + tax + ") = $" + (sub+tax) + " does not match Stated Total ($" + tot + ")! Flagged for review.");
+      } else {
+        alert("Validation Passed: Calculations match perfectly within tolerance!");
+      }
+    }
+
+    function simulateUpload() {
+      alert("New document 'incoming_invoice_batch.pdf' simulated and queued for background OCR!");
+    }
+
+    function performSearch() {
+      const q = document.getElementById('search-input').value.toLowerCase();
+      const res = document.getElementById('search-results');
+      if (q.includes('supply') || q.includes('chair')) {
+        res.innerHTML = `
+          <div class="p-3 rounded-xl border border-indigo-400 bg-indigo-50/50 flex items-center justify-between">
+            <div>
+              <div class="font-bold text-indigo-700">office_supplies_scan.png</div>
+              <div class="text-[var(--muted-foreground)] text-[11px]">Vendor: Modern Office Supplies | Total: $990.00</div>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold text-[11px]">Semantic Match: 98.7%</span>
+          </div>
+        `;
+      } else {
+        res.innerHTML = `
+          <div class="p-3 rounded-xl border border-indigo-400 bg-indigo-50/50 flex items-center justify-between">
+            <div>
+              <div class="font-bold text-indigo-700">invoice_cloudscale.pdf</div>
+              <div class="text-[var(--muted-foreground)] text-[11px]">Vendor: CloudScale Systems Inc. | Total: $660.00</div>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold text-[11px]">Match: 99.1%</span>
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

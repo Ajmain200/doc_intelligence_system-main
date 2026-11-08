@@ -1,0 +1,73 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "1. Run Automated Tests (Pytest)",
+      "type": "shell",
+      "command": "${workspaceFolder}\\venv\\Scripts\\pytest.exe tests/ -v",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "2. Run Benchmark Evaluation",
+      "type": "shell",
+      "command": "${workspaceFolder}\\venv\\Scripts\\python.exe evaluation/evaluate.py",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "3. Start FastAPI Backend Server",
+      "type": "shell",
+      "command": "${workspaceFolder}\\venv\\Scripts\\uvicorn.exe app.main:app --host 0.0.0.0 --port 8000 --reload",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "4. Launch Dashboard Preview",
+      "type": "shell",
+      "command": "${workspaceFolder}\\venv\\Scripts\\python.exe run_preview.py",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "5. Start React Frontend Server",
+      "type": "shell",
+      "command": "cd frontend; npm run dev",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

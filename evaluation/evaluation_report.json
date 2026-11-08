@@ -1,0 +1,17 @@
+{
+  "total_documents": 4,
+  "document_success_rate": "100.0%",
+  "document_failure_rate": "0.0%",
+  "average_processing_time_ms": 0.68,
+  "overall_extraction_accuracy": "100.00%",
+  "field_accuracies": {
+    "invoice_number": "100.0%",
+    "invoice_date": "100.0%",
+    "supplier_name": "100.0%",
+    "customer_name": "100.0%",
+    "subtotal": "100.0%",
+    "tax": "100.0%",
+    "total": "100.0%",
+    "line_items_count": "100.0%"
+  }
+}

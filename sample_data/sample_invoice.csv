@@ -1,0 +1,2 @@
+InvoiceNumber,Date,Supplier,Customer,Currency,Subtotal,Tax,Total
+INV-2024-001,2024-03-15,Apex Logistics,Global Corp,USD,1000.00,100.00,1100.00

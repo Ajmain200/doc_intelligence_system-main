@@ -1,0 +1,70 @@
+[
+  {
+    "id": "bench_001",
+    "name": "Standard IT Services Invoice",
+    "file_type": "text",
+    "raw_text": "TAX INVOICE\nSupplier: CloudScale Systems Inc.\nCustomer: Delta Logistics\nInvoice Number: CS-2024-8812\nDate: 2024-05-10\nCurrency: USD\n\nItems:\nManaged Kubernetes Node 2 250.00 500.00\nSSL Certificate 1 100.00 100.00\n\nSubtotal: $600.00\nTax: $60.00\nTotal Amount: $660.00",
+    "ground_truth": {
+      "invoice_number": "CS-2024-8812",
+      "invoice_date": "2024-05-10",
+      "supplier_name": "CloudScale Systems Inc.",
+      "customer_name": "Delta Logistics",
+      "currency": "USD",
+      "subtotal": 600.00,
+      "tax": 60.00,
+      "total": 660.00,
+      "line_items_count": 2
+    }
+  },
+  {
+    "id": "bench_002",
+    "name": "Office Supplies Order",
+    "file_type": "text",
+    "raw_text": "INVOICE #INV-44110\nDate: 2024-06-01\nFrom: Modern Office Supplies\nBill To: Quantum Innovations\n\nErgonomic Chairs 5 120.00 600.00\nWhiteboards 2 150.00 300.00\n\nSubtotal: $900.00\nTax: $90.00\nTotal: $990.00",
+    "ground_truth": {
+      "invoice_number": "INV-44110",
+      "invoice_date": "2024-06-01",
+      "supplier_name": "Modern Office Supplies",
+      "customer_name": "Quantum Innovations",
+      "currency": "USD",
+      "subtotal": 900.00,
+      "tax": 90.00,
+      "total": 990.00,
+      "line_items_count": 2
+    }
+  },
+  {
+    "id": "bench_003",
+    "name": "Zero Tax Medical Receipt",
+    "file_type": "text",
+    "raw_text": "RECEIPT\nVendor: MediCare Labs\nCustomer: John Smith\nInvoice No: MED-901\nDate: 2024-04-18\nCurrency: USD\n\nDiagnostic Blood Panel 1 150.00 150.00\n\nSubtotal: $150.00\nTax: $0.00\nTotal Due: $150.00",
+    "ground_truth": {
+      "invoice_number": "MED-901",
+      "invoice_date": "2024-04-18",
+      "supplier_name": "MediCare Labs",
+      "customer_name": "John Smith",
+      "currency": "USD",
+      "subtotal": 150.00,
+      "tax": 0.00,
+      "total": 150.00,
+      "line_items_count": 1
+    }
+  },
+  {
+    "id": "bench_004",
+    "name": "Corrupted or Missing Fields Edge Case",
+    "file_type": "text",
+    "raw_text": "Random note without invoice number.\nSupplier: Anonymous Cafe\nTotal: $15.50",
+    "ground_truth": {
+      "invoice_number": null,
+      "invoice_date": null,
+      "supplier_name": "Anonymous Cafe",
+      "customer_name": null,
+      "currency": "USD",
+      "subtotal": null,
+      "tax": null,
+      "total": 15.50,
+      "line_items_count": 0
+    }
+  }
+]
