@@ -209,7 +209,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```bash
 cd frontend
 npm install
-npm run dev
+npm --prefix frontend run dev
 # Dashboard opens at: http://localhost:5173
 ```
 
